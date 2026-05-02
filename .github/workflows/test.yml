@@ -1,0 +1,14 @@
+name: AI Service CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: python -c "from triage_model import TriageModel; m=TriageModel(); r=m.predict('صداع شديد', 'head'); print('Test passed:', r)"
+      - run: python -c "from triage_model import ChatBot; b=ChatBot(); r=b.respond('سلام'); print('ChatBot:', r)"
